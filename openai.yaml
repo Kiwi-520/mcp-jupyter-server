@@ -1,0 +1,104 @@
+openapi: 3.0.0
+info:
+  title: Jupyter Notebook MCP Server
+  version: 1.0.0
+  description: An API to programmatically control a Jupyter Notebook.
+paths:
+  /edit_cell:
+    post:
+      summary: Edits a cell in a notebook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cell_number:
+                  type: integer
+                  description: "The index of the cell to edit."
+                content:
+                  type: string
+                  description: "The new content for the cell."
+              required:
+                - cell_number
+                - content
+      responses:
+        '200':
+          description: Cell edited successfully
+
+  /delete_cell:
+    post:
+      summary: Deletes a cell from a notebook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cell_number:
+                  type: integer
+                  description: "The index of the cell to delete."
+              required:
+                - cell_number
+      responses:
+        '200':
+          description: Cell deleted successfully
+
+  /create_cell:
+    post:
+      summary: Creates a new cell in a notebook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  description: "The content for the new cell."
+                cell_type:
+                  type: string
+                  description: "Type of cell to create ('code' or 'markdown')."
+                  default: 'code'
+              required:
+                - content
+      responses:
+        '200':
+          description: Cell created successfully
+
+  /move_cell:
+    post:
+      summary: Moves a cell up or down
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cell_number:
+                  type: integer
+                  description: "The index of the cell to move."
+                direction:
+                  type: string
+                  description: "Direction to move ('up' or 'down')."
+                places:
+                  type: integer
+                  description: "Number of places to move the cell."
+                  default: 1
+              required:
+                - cell_number
+                - direction
+      responses:
+        '200':
+          description: Cell moved successfully
+
+  /clear_notebook:
+    post:
+      summary: Deletes all cells in the notebook
+      responses:
+        '200':
+          description: Notebook cleared successfully.
