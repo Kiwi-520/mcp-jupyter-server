@@ -1,54 +1,13 @@
 openapi: 3.0.0
 info:
-  title: Jupyter Notebook MCP Server
-  version: 1.0.0
-  description: An API to programmatically control a Jupyter Notebook.
+  title: Local Jupyter Notebook Server
+  version: 2.0.0
+  description: An API to programmatically control local Jupyter Notebook files.
 paths:
-  /edit_cell:
-    post:
-      summary: Edits a cell in a notebook
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                cell_number:
-                  type: integer
-                  description: "The index of the cell to edit."
-                content:
-                  type: string
-                  description: "The new content for the cell."
-              required:
-                - cell_number
-                - content
-      responses:
-        '200':
-          description: Cell edited successfully
-
-  /delete_cell:
-    post:
-      summary: Deletes a cell from a notebook
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                cell_number:
-                  type: integer
-                  description: "The index of the cell to delete."
-              required:
-                - cell_number
-      responses:
-        '200':
-          description: Cell deleted successfully
-
   /create_cell:
     post:
-      summary: Creates a new cell in a notebook
+      summary: Creates a new cell in a specified notebook.
+      description: If the notebook does not exist, it will be created.
       requestBody:
         required: true
         content:
@@ -56,6 +15,9 @@ paths:
             schema:
               type: object
               properties:
+                notebook_name:
+                  type: string
+                  description: "The path to the notebook file (e..g, 'my_notebook.ipynb')."
                 content:
                   type: string
                   description: "The content for the new cell."
@@ -64,14 +26,16 @@ paths:
                   description: "Type of cell to create ('code' or 'markdown')."
                   default: 'code'
               required:
+                - notebook_name
                 - content
       responses:
         '200':
           description: Cell created successfully
 
-  /move_cell:
+  /edit_cell:
     post:
-      summary: Moves a cell up or down
+      summary: Edits a cell in a specified notebook.
+      description: If the notebook does not exist, it will be created.
       requestBody:
         required: true
         content:
@@ -79,6 +43,61 @@ paths:
             schema:
               type: object
               properties:
+                notebook_name:
+                  type: string
+                  description: "The path to the notebook file."
+                cell_number:
+                  type: integer
+                  description: "The index of the cell to edit."
+                content:
+                  type: string
+                  description: "The new content for the cell."
+              required:
+                - notebook_name
+                - cell_number
+                - content
+      responses:
+        '200':
+          description: Cell edited successfully
+
+  /delete_cell:
+    delete: # <-- This is changed to DELETE to match your server code
+      summary: Deletes a cell from a specified notebook.
+      description: This will return an error if the notebook does not exist.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notebook_name:
+                  type: string
+                  description: "The path to the notebook file."
+                cell_number:
+                  type: integer
+                  description: "The index of the cell to delete."
+              required:
+                - notebook_name
+                - cell_number
+      responses:
+        '200':
+          description: Cell deleted successfully
+
+  /move_cell:
+    post:
+      summary: Moves a cell up or down in a specified notebook.
+      description: This will return an error if the notebook does not exist.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notebook_name:
+                  type: string
+                  description: "The path to the notebook file."
                 cell_number:
                   type: integer
                   description: "The index of the cell to move."
@@ -90,6 +109,7 @@ paths:
                   description: "Number of places to move the cell."
                   default: 1
               required:
+                - notebook_name
                 - cell_number
                 - direction
       responses:
@@ -98,7 +118,20 @@ paths:
 
   /clear_notebook:
     post:
-      summary: Deletes all cells in the notebook
+      summary: Deletes all cells in a specified notebook.
+      description: This will overwrite the file with a new, empty notebook.
+      requestBody: # <-- This was added
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notebook_name:
+                  type: string
+                  description: "The path to the notebook file to clear."
+              required:
+                - notebook_name
       responses:
         '200':
-          description: Notebook cleared successfully.
+          description: Notebook cleared successfully
