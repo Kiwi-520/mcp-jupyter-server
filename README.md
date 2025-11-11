@@ -11,6 +11,7 @@ A RESTful API server for managing Jupyter notebooks programmatically. Create, ed
 - [API Endpoints](#api-endpoints)
 - [Testing with cURL](#testing-with-curl)
 - [Examples](#examples)
+- [Checkout my article for detailed tutorial](#checkout-my-article-for-detailed-tutorial)
 - [Troubleshooting](#troubleshooting)
 
 ## ✨ Features
@@ -318,6 +319,11 @@ curl -X POST http://localhost:5001/edit_cell \
   "error": "Cell number 999 is out of range for test.ipynb"
 }
 ```
+
+## Checkout my article for detailed tutorial 😊
+
+[How I Built a Local MCP Server to Control Your Jupyter Notebooks](https://dishaholmukhe-jupyter-server.hashnode.dev/how-i-built-a-local-mcp-server-to-control-your-jupyter-notebooks)
+
 
 ## 🔍 Troubleshooting
 
