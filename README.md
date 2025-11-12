@@ -1,6 +1,6 @@
 # 🚀 MCP Jupyter Server
 
-A RESTful API server for managing Jupyter notebooks programmatically. Create, edit, delete, and move cells in Jupyter notebooks using simple HTTP requests.
+A MCP server for managing Jupyter notebooks programmatically. Create, edit, delete, and move cells in Jupyter notebooks using simple HTTP requests.
 
 ## 📋 Table of Contents
 
