@@ -205,7 +205,7 @@ curl -X POST http://127.0.0.1:8000/chat \
 ## 👩‍💻 Author
 
 **Disha Holmukhe**
-AI Systems | Agentic AI | Backend Engineering
+AI Systems | Agentic AI | ML Engineering | Open Source Contributor
 
 📖 Blog:
 [How I Built a Local MCP Server to Control Jupyter Notebooks](https://dishaholmukhe-jupyter-server.hashnode.dev/how-i-built-a-local-mcp-server-to-control-your-jupyter-notebooks)
